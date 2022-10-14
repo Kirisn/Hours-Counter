@@ -17,7 +17,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0
+version: 1.0.0+1
 
 environment:
   sdk: '>=2.18.0 <3.0.0'
@@ -47,15 +47,25 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
-
   flutter_native_splash: ^2.2.11
   flutter_launcher_icons: "^0.10.0"
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
+flutter_icons:
+  remove_alpha_ios: true
+  android: true
+  ios: true
+  image_path: "assets/splash.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/splash.png"
+    background_color: "#ffffff"
+    theme_color: "#ffffff"
+  windows:
+    generate: true
+    image_path: "assets/splash.png"
+    icon_size: 48 # min:48, max:256, default: 48
 
-#Run these commands after changes below
-#flutter pub run flutter_native_splash:create
 flutter_native_splash:
   # This package generates native code to customize Flutter's default white native splash screen
   # with background color and splash image.
@@ -108,22 +118,22 @@ flutter_native_splash:
     # 640 pixels in diameter.
     # App icon without an icon background: This should be 1152×1152 pixels, and fit within a circle
     # 768 pixels in diameter.
-    #image: assets/splash.png
+    image: assets/android12splash.png
 
-    #Splash screen background color.
+    # Splash screen background color.
     color: "#ffffff"
 
     # App icon background color.
-    #icon_background_color: assets/splash.png
+    #icon_background_color: "#111111"
 
     # The branding property allows you to specify an image used as branding in the splash screen.
-    #branding: assets/splash.png
+    #branding: assets/dart.png
 
     # The image_dark, color_dark, icon_background_color_dark, and branding_dark set values that
     # apply when the device is in dark mode. If they are not specified, the app will use the
     # parameters from above.
-    #image_dark: assets/splash.png
-    color_dark: "#161617"
+    #image_dark: assets/android12splash-invert.png
+    color_dark: "#333436"
     #icon_background_color_dark: "#eeeeee"
 
   # The android, ios and web parameters can be used to disable generating a splash screen on a given
@@ -158,13 +168,13 @@ flutter_native_splash:
   # https://developer.android.com/reference/android/view/Gravity): bottom, center,
   # center_horizontal, center_vertical, clip_horizontal, clip_vertical, end, fill, fill_horizontal,
   # fill_vertical, left, right, start, or top.
-  android_gravity: fill
+  android_gravity: center
   #
   # ios_content_mode can be one of the following iOS UIView.ContentMode (see
   # https://developer.apple.com/documentation/uikit/uiview/contentmode): scaleToFill,
   # scaleAspectFit, scaleAspectFill, center, top, bottom, left, right, topLeft, topRight,
   # bottomLeft, or bottomRight.
-  ios_content_mode: scaleToFill
+  ios_content_mode: center
   #
   # web_image_mode can be one of the following modes: center, contain, stretch, and cover.
   web_image_mode: center
@@ -189,24 +199,9 @@ flutter_native_splash:
   #  - 'ios/Runner/Info-Debug.plist'
   #  - 'ios/Runner/Info-Release.plist'
 
-#Run Commands after changes below:
-#flutter pub get
-#flutter pub run flutter_launcher_icons:main
-flutter_icons:
-  remove_alpha_ios: true
-  android: "launcher_icon"
-  ios: true
-  image_path: "assets/splash.png"
-  min_sdk_android: 21 # android min sdk min:16, default 21
-  web:
-    generate: true
-    image_path: "assets/splash.png"
-    background_color: "#0271f7"
-    theme_color: "#0271f7"
-  windows:
-    generate: true
-    image_path: "assets/splash.png"
-    icon_size: 48 # min:48, max:256, default: 48
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
 flutter:

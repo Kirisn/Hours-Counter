@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() => runApp(const MyApp());
+
+// Create a Form widget.
+class MyCustomForm extends StatefulWidget {
+  const MyCustomForm({super.key});
+
+  @override
+  MyCustomFormState createState() {
+    return MyCustomFormState();
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -14,23 +22,48 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: appTitle,
       home: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text(appTitle),
-        ),
-        body: const MyCustomForm(),
-      ),
+          appBar: AppBar(
+            centerTitle: true,
+            title: const Text(appTitle),
+          ),
+          body: const MyCustomForm(),
+          drawer: Drawer(
+            child: ListView(padding: EdgeInsets.zero, children: [
+              const SizedBox(
+                height: 80,
+                child: DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                  ),
+                  margin: EdgeInsets.all(0),
+                  padding: EdgeInsets.only(left: 100, top: -20),
+                  child: Text(
+                    'Navigator',
+                    style: TextStyle(color: Colors.white, fontSize: 22),
+                  ),
+                ),
+              ),
+              ListTile(
+                title: const Text(
+                  "Calcolo stipendio",
+                  style: TextStyle(fontSize: 16),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: const Text(
+                  "Calcolo € l'ora",
+                  style: TextStyle(fontSize: 16),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ]),
+          )),
     );
-  }
-}
-
-// Create a Form widget.
-class MyCustomForm extends StatefulWidget {
-  const MyCustomForm({super.key});
-
-  @override
-  MyCustomFormState createState() {
-    return MyCustomFormState();
   }
 }
 
@@ -59,19 +92,21 @@ class MyCustomFormState extends State<MyCustomForm> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("Ultima ora inserita -> $ore:$minuti"),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
             child: TextFormField(
               decoration: const InputDecoration(
-                hintText: "H",
+                hintText: "Ore",
                 border: OutlineInputBorder(),
                 labelText: "Ore",
               ),
               keyboardType: TextInputType.number,
               // The validator receives the text that the user has entered.
               validator: (value) {
-                tmp = int.parse(value!);
+                if (value == null) {
+                  return "Inserisci un numero";
+                }
+                tmp = int.parse(value);
                 if (tmp > 24 || tmp < 0) {
                   return 'Inserisci un numero validio';
                 } else {
