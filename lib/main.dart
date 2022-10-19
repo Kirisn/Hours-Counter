@@ -118,12 +118,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 if (value == null) {
                   return "Inserisci un numero";
                 }
-                tmp = int.parse(value);
-                if (tmp > 24 || tmp < 0) {
-                  return 'Inserisci un numero validio';
-                } else {
-                  ore = tmp;
-                }
+                ore = int.parse(value);
                 return null;
               },
             ),
@@ -245,13 +240,10 @@ class SecondScreenFormState extends State<SecondScreenForm> {
   // Note: This is a GlobalKey<FormState>,
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
-  int ore = 0;
-  int tmp = 0;
-  int tmp2 = 0;
-  int minuti = 0;
-  int tmp3 = 0;
-  int paga = 0;
-  double somma = 0;
+  var ore = 0;
+  var tmp = 0;
+  var paga = 0;
+  var somma = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -265,9 +257,9 @@ class SecondScreenFormState extends State<SecondScreenForm> {
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
             child: TextFormField(
               decoration: const InputDecoration(
-                hintText: "Ore",
+                hintText: "Ore settimanali",
                 border: OutlineInputBorder(),
-                labelText: "Ore",
+                labelText: "Ore settimanali",
               ),
               keyboardType: TextInputType.number,
               // The validator receives the text that the user has entered.
@@ -275,12 +267,7 @@ class SecondScreenFormState extends State<SecondScreenForm> {
                 if (value == null) {
                   return "Inserisci un numero";
                 }
-                tmp = int.parse(value);
-                if (tmp > 24 || tmp < 0) {
-                  return 'Inserisci un numero validio';
-                } else {
-                  ore = tmp;
-                }
+                ore = int.parse(value) * 4;
                 return null;
               },
             ),
@@ -290,34 +277,16 @@ class SecondScreenFormState extends State<SecondScreenForm> {
             child: TextFormField(
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                    hintText: "Minuti",
+                    hintText: "Stipendio",
                     border: OutlineInputBorder(),
-                    labelText: "Minuti"),
-                validator: (value) {
-                  tmp2 = int.parse(value!);
-                  if (tmp2 < 0 || tmp2 > 59) {
-                    return "Inserisci un numero valido";
-                  } else {
-                    minuti = tmp2;
-                  }
-                  return null;
-                }),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
-            child: TextFormField(
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                    hintText: "Paga",
-                    border: OutlineInputBorder(),
-                    labelText: "Paga"),
+                    labelText: "Stipendio"),
                 validator: (value) {
                   paga = int.parse(value!);
                   return null;
                 }),
           ),
           Text(
-            "$somma",
+            "$somma€ l'ora",
             style: const TextStyle(fontSize: 30),
           ),
           Padding(
@@ -326,7 +295,7 @@ class SecondScreenFormState extends State<SecondScreenForm> {
               onPressed: () {
                 setState(() {
                   if (_formKey.currentState!.validate()) {
-                    somma += (paga * ore) + (minuti * (paga / 60));
+                    somma = (paga / ore);
                   }
                 });
                 // Validate returns true if the form is valid, or false otherwise.
