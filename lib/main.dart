@@ -116,7 +116,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               validator: (value) {
-                if (value == null || value.isEmpty) {
+                if (value!.isEmpty) {
                   return "Inserisci un numero";
                 }
                 ore = int.parse(value);
@@ -134,7 +134,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                     border: OutlineInputBorder(),
                     labelText: "Minuti"),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
+                  if (value!.isEmpty) {
                     return "Inserisci un numero";
                   }
                   tmp2 = int.parse(value);
@@ -156,7 +156,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                     border: OutlineInputBorder(),
                     labelText: "Paga"),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
+                  if (value!.isEmpty) {
                     return "Inserisci un numero";
                   }
                   paga = int.parse(value);
@@ -274,7 +274,7 @@ class SecondScreenFormState extends State<SecondScreenForm> {
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               validator: (value) {
-                if (value == null || value.isEmpty) {
+                if (value!.isEmpty) {
                   return "Inserisci un numero";
                 }
                 ore = int.parse(value) * 4;
@@ -292,7 +292,7 @@ class SecondScreenFormState extends State<SecondScreenForm> {
                     border: OutlineInputBorder(),
                     labelText: "Stipendio"),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
+                  if (value!.isEmpty) {
                     return "Inserisci un numero";
                   }
                   paga = int.parse(value);
