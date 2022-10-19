@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(const MyApp());
 
@@ -49,24 +50,26 @@ class First extends StatelessWidget {
         drawer: Drawer(
           child: ListView(padding: EdgeInsets.zero, children: [
             const SizedBox(
-              height: 80,
+              height: 100,
               child: DrawerHeader(
                 decoration: BoxDecoration(
                   color: Colors.blue,
                 ),
                 margin: EdgeInsets.all(0),
-                padding: EdgeInsets.only(left: 100, top: -20),
-                child: Text(
-                  'Navigator',
-                  style: TextStyle(color: Colors.white, fontSize: 22),
-                ),
+                child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Navigator',
+                      style: TextStyle(color: Colors.white, fontSize: 22),
+                    )),
               ),
             ),
             ListTile(
               title: const Text(
-                "Calcolo schiavitù",
+                "Calcolo paga oraria",
                 style: TextStyle(fontSize: 16),
               ),
+              leading: const Icon(Icons.euro),
               onTap: () {
                 Navigator.push(
                   context,
@@ -88,16 +91,14 @@ class MyCustomFormState extends State<MyCustomForm> {
   // Note: This is a GlobalKey<FormState>,
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
-  int ore = 0;
-  int tmp = 0;
-  int tmp2 = 0;
-  int minuti = 0;
-  int tmp3 = 0;
-  int paga = 0;
-  double somma = 0;
 
   @override
   Widget build(BuildContext context) {
+    var ore = 0;
+    var tmp2 = 0;
+    var minuti = 0;
+    var paga = 0;
+    var somma = 0.0;
     // Build a Form widget using the _formKey created above.
     return Form(
       key: _formKey,
@@ -113,9 +114,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                 labelText: "Ore",
               ),
               keyboardType: TextInputType.number,
-              // The validator receives the text that the user has entered.
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               validator: (value) {
-                if (value == null) {
+                if (value == null || value.isEmpty) {
                   return "Inserisci un numero";
                 }
                 ore = int.parse(value);
@@ -127,12 +128,16 @@ class MyCustomFormState extends State<MyCustomForm> {
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
             child: TextFormField(
                 keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 decoration: const InputDecoration(
                     hintText: "Minuti",
                     border: OutlineInputBorder(),
                     labelText: "Minuti"),
                 validator: (value) {
-                  tmp2 = int.parse(value!);
+                  if (value == null || value.isEmpty) {
+                    return "Inserisci un numero";
+                  }
+                  tmp2 = int.parse(value);
                   if (tmp2 < 0 || tmp2 > 59) {
                     return "Inserisci un numero valido";
                   } else {
@@ -145,17 +150,21 @@ class MyCustomFormState extends State<MyCustomForm> {
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
             child: TextFormField(
                 keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 decoration: const InputDecoration(
                     hintText: "Paga",
                     border: OutlineInputBorder(),
                     labelText: "Paga"),
                 validator: (value) {
-                  paga = int.parse(value!);
+                  if (value == null || value.isEmpty) {
+                    return "Inserisci un numero";
+                  }
+                  paga = int.parse(value);
                   return null;
                 }),
           ),
           Text(
-            "$somma",
+            "$somma€",
             style: const TextStyle(fontSize: 30),
           ),
           Padding(
@@ -195,7 +204,7 @@ class Second extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const appTitle = 'Hours';
+    const appTitle = 'Hours Counter';
 
     return Scaffold(
         appBar: AppBar(
@@ -206,20 +215,22 @@ class Second extends StatelessWidget {
         drawer: Drawer(
           child: ListView(padding: EdgeInsets.zero, children: [
             const SizedBox(
-              height: 80,
+              height: 100,
               child: DrawerHeader(
                 decoration: BoxDecoration(
                   color: Colors.blue,
                 ),
                 margin: EdgeInsets.all(0),
-                padding: EdgeInsets.only(left: 100, top: -20),
-                child: Text(
-                  'Navigator',
-                  style: TextStyle(color: Colors.white, fontSize: 22),
-                ),
+                child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Navigator',
+                      style: TextStyle(color: Colors.white, fontSize: 22),
+                    )),
               ),
             ),
             ListTile(
+              leading: const Icon(Icons.euro),
               title: const Text(
                 "Calcolo stipendio",
                 style: TextStyle(fontSize: 16),
@@ -240,13 +251,12 @@ class SecondScreenFormState extends State<SecondScreenForm> {
   // Note: This is a GlobalKey<FormState>,
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
-  var ore = 0;
-  var tmp = 0;
-  var paga = 0;
-  var somma = 0.0;
 
   @override
   Widget build(BuildContext context) {
+    var ore = 0;
+    var paga = 0;
+    var somma = 0.0;
     // Build a Form widget using the _formKey created above.
     return Form(
       key: _formKey,
@@ -262,9 +272,9 @@ class SecondScreenFormState extends State<SecondScreenForm> {
                 labelText: "Ore settimanali",
               ),
               keyboardType: TextInputType.number,
-              // The validator receives the text that the user has entered.
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               validator: (value) {
-                if (value == null) {
+                if (value == null || value.isEmpty) {
                   return "Inserisci un numero";
                 }
                 ore = int.parse(value) * 4;
@@ -276,12 +286,16 @@ class SecondScreenFormState extends State<SecondScreenForm> {
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
             child: TextFormField(
                 keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 decoration: const InputDecoration(
                     hintText: "Stipendio",
                     border: OutlineInputBorder(),
                     labelText: "Stipendio"),
                 validator: (value) {
-                  paga = int.parse(value!);
+                  if (value == null || value.isEmpty) {
+                    return "Inserisci un numero";
+                  }
+                  paga = int.parse(value);
                   return null;
                 }),
           ),
