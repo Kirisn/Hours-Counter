@@ -47,44 +47,48 @@ class First extends StatelessWidget {
   Widget build(BuildContext context) {
     const appTitle = 'Hours Counter';
 
-    return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text(appTitle),
-        ),
-        body: const MyCustomForm(),
-        drawer: Drawer(
-          child: ListView(padding: EdgeInsets.zero, children: [
-            const SizedBox(
-              height: 100,
-              child: DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
+    return GestureDetector(
+        onTap: () {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        child: Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: const Text(appTitle),
+            ),
+            body: const MyCustomForm(),
+            drawer: Drawer(
+              child: ListView(padding: EdgeInsets.zero, children: [
+                const SizedBox(
+                  height: 100,
+                  child: DrawerHeader(
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                    ),
+                    margin: EdgeInsets.all(0),
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Navigator',
+                          style: TextStyle(color: Colors.white, fontSize: 22),
+                        )),
+                  ),
                 ),
-                margin: EdgeInsets.all(0),
-                child: Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Navigator',
-                      style: TextStyle(color: Colors.white, fontSize: 22),
-                    )),
-              ),
-            ),
-            ListTile(
-              title: const Text(
-                "Calcolo paga oraria",
-                style: TextStyle(fontSize: 16),
-              ),
-              leading: const Icon(Icons.euro),
-              onTap: () {
-                _ore.clear();
-                _minuti.clear();
-                _paga.clear();
-                Navigator.pushNamed(context, '/second');
-              },
-            ),
-          ]),
-        ));
+                ListTile(
+                  title: const Text(
+                    "Calcolo paga oraria",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  leading: const Icon(Icons.euro),
+                  onTap: () {
+                    _ore.clear();
+                    _minuti.clear();
+                    _paga.clear();
+                    Navigator.pushNamed(context, '/second');
+                  },
+                ),
+              ]),
+            )));
   }
 }
 
@@ -228,44 +232,47 @@ class Second extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const appTitle = 'Hours Counter';
-
-    return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text(appTitle),
-        ),
-        body: const SecondScreenForm(),
-        drawer: Drawer(
-          child: ListView(padding: EdgeInsets.zero, children: [
-            const SizedBox(
-              height: 100,
-              child: DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
+    return GestureDetector(
+        onTap: () {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        child: Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: const Text(appTitle),
+            ),
+            body: const SecondScreenForm(),
+            drawer: Drawer(
+              child: ListView(padding: EdgeInsets.zero, children: [
+                const SizedBox(
+                  height: 100,
+                  child: DrawerHeader(
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                    ),
+                    margin: EdgeInsets.all(0),
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Navigator',
+                          style: TextStyle(color: Colors.white, fontSize: 22),
+                        )),
+                  ),
                 ),
-                margin: EdgeInsets.all(0),
-                child: Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Navigator',
-                      style: TextStyle(color: Colors.white, fontSize: 22),
-                    )),
-              ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.euro),
-              title: const Text(
-                "Calcolo stipendio",
-                style: TextStyle(fontSize: 16),
-              ),
-              onTap: () {
-                _ores.clear();
-                _stipendio.clear();
-                Navigator.pushNamed(context, '/');
-              },
-            ),
-          ]),
-        ));
+                ListTile(
+                  leading: const Icon(Icons.euro),
+                  title: const Text(
+                    "Calcolo stipendio",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  onTap: () {
+                    _ores.clear();
+                    _stipendio.clear();
+                    Navigator.pushNamed(context, '/');
+                  },
+                ),
+              ]),
+            )));
   }
 }
 
