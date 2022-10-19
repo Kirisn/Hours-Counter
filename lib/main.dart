@@ -34,6 +34,12 @@ class MyApp extends StatelessWidget {
   }
 }
 
+final TextEditingController _ore = TextEditingController();
+final TextEditingController _minuti = TextEditingController();
+final TextEditingController _paga = TextEditingController();
+final TextEditingController _ores = TextEditingController();
+final TextEditingController _stipendio = TextEditingController();
+
 class First extends StatelessWidget {
   const First({super.key});
 
@@ -71,10 +77,10 @@ class First extends StatelessWidget {
               ),
               leading: const Icon(Icons.euro),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Second()),
-                );
+                _ore.clear();
+                _minuti.clear();
+                _paga.clear();
+                Navigator.pushNamed(context, '/second');
               },
             ),
           ]),
@@ -87,18 +93,18 @@ class First extends StatelessWidget {
 class MyCustomFormState extends State<MyCustomForm> {
   // Create a global key that uniquely identifies the Form widget
   // and allows validation of the form.
-  //
   // Note: This is a GlobalKey<FormState>,
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
 
+  var ore = 0;
+  var tmp2 = 0;
+  var minuti = 0;
+  var paga = 0;
+  var somma = 0.0;
+
   @override
   Widget build(BuildContext context) {
-    var ore = 0;
-    var tmp2 = 0;
-    var minuti = 0;
-    var paga = 0;
-    var somma = 0.0;
     // Build a Form widget using the _formKey created above.
     return Form(
       key: _formKey,
@@ -108,13 +114,17 @@ class MyCustomFormState extends State<MyCustomForm> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
             child: TextFormField(
-              decoration: const InputDecoration(
-                hintText: "Ore",
-                border: OutlineInputBorder(),
-                labelText: "Ore",
-              ),
+              decoration: InputDecoration(
+                  hintText: "Ore",
+                  border: const OutlineInputBorder(),
+                  labelText: "Ore",
+                  suffixIcon: IconButton(
+                    onPressed: _ore.clear,
+                    icon: const Icon(Icons.clear),
+                  )),
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              controller: _ore,
               validator: (value) {
                 if (value!.isEmpty) {
                   return "Inserisci un numero";
@@ -129,13 +139,18 @@ class MyCustomFormState extends State<MyCustomForm> {
             child: TextFormField(
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                decoration: const InputDecoration(
+                controller: _minuti,
+                decoration: InputDecoration(
                     hintText: "Minuti",
-                    border: OutlineInputBorder(),
-                    labelText: "Minuti"),
+                    border: const OutlineInputBorder(),
+                    labelText: "Minuti",
+                    suffixIcon: IconButton(
+                      onPressed: _minuti.clear,
+                      icon: const Icon(Icons.clear),
+                    )),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Inserisci un numero";
+                    return 'Inserire un numero';
                   }
                   tmp2 = int.parse(value);
                   if (tmp2 < 0 || tmp2 > 59) {
@@ -151,10 +166,15 @@ class MyCustomFormState extends State<MyCustomForm> {
             child: TextFormField(
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                decoration: const InputDecoration(
+                controller: _paga,
+                decoration: InputDecoration(
                     hintText: "Paga",
-                    border: OutlineInputBorder(),
-                    labelText: "Paga"),
+                    border: const OutlineInputBorder(),
+                    labelText: "Paga",
+                    suffixIcon: IconButton(
+                      onPressed: _paga.clear,
+                      icon: const Icon(Icons.clear),
+                    )),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "Inserisci un numero";
@@ -186,6 +206,9 @@ class MyCustomFormState extends State<MyCustomForm> {
             child: ElevatedButton(
               onPressed: () {
                 setState(() {
+                  _ore.clear();
+                  _minuti.clear();
+                  _paga.clear();
                   somma = 0;
                 });
                 // Validate returns true if the form is valid, or false otherwise.
@@ -236,6 +259,8 @@ class Second extends StatelessWidget {
                 style: TextStyle(fontSize: 16),
               ),
               onTap: () {
+                _ores.clear();
+                _stipendio.clear();
                 Navigator.pushNamed(context, '/');
               },
             ),
@@ -251,12 +276,12 @@ class SecondScreenFormState extends State<SecondScreenForm> {
   // Note: This is a GlobalKey<FormState>,
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
+  var ore = 0;
+  var paga = 0;
+  var somma = 0.0;
 
   @override
   Widget build(BuildContext context) {
-    var ore = 0;
-    var paga = 0;
-    var somma = 0.0;
     // Build a Form widget using the _formKey created above.
     return Form(
       key: _formKey,
@@ -266,13 +291,17 @@ class SecondScreenFormState extends State<SecondScreenForm> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
             child: TextFormField(
-              decoration: const InputDecoration(
-                hintText: "Ore settimanali",
-                border: OutlineInputBorder(),
-                labelText: "Ore settimanali",
-              ),
+              decoration: InputDecoration(
+                  hintText: "Ore settimanali",
+                  border: const OutlineInputBorder(),
+                  labelText: "Ore settimanali",
+                  suffixIcon: IconButton(
+                    onPressed: _ores.clear,
+                    icon: const Icon(Icons.clear),
+                  )),
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              controller: _ores,
               validator: (value) {
                 if (value!.isEmpty) {
                   return "Inserisci un numero";
@@ -287,10 +316,15 @@ class SecondScreenFormState extends State<SecondScreenForm> {
             child: TextFormField(
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                decoration: const InputDecoration(
+                controller: _stipendio,
+                decoration: InputDecoration(
                     hintText: "Stipendio",
-                    border: OutlineInputBorder(),
-                    labelText: "Stipendio"),
+                    border: const OutlineInputBorder(),
+                    labelText: "Stipendio",
+                    suffixIcon: IconButton(
+                      onPressed: _stipendio.clear,
+                      icon: const Icon(Icons.clear),
+                    )),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "Inserisci un numero";
@@ -322,6 +356,8 @@ class SecondScreenFormState extends State<SecondScreenForm> {
             child: ElevatedButton(
               onPressed: () {
                 setState(() {
+                  _ores.clear();
+                  _stipendio.clear();
                   somma = 0;
                 });
                 // Validate returns true if the form is valid, or false otherwise.
