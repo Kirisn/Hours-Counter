@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  runApp(const MyApp());
+}
 
-// Create a Form widget.
 class MyCustomForm extends StatefulWidget {
   const MyCustomForm({super.key});
 
@@ -27,10 +28,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Routes', initialRoute: '/', routes: {
-      '/': (context) => const First(),
-      '/second': (context) => const Second(),
-    });
+    return MaterialApp(
+      title: 'Hours Counter',
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const First(),
+        '/second': (context) => const Second(),
+      },
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+    );
   }
 }
 
@@ -47,6 +54,9 @@ class First extends StatelessWidget {
   Widget build(BuildContext context) {
     const appTitle = 'Hours Counter';
 
+    var brightness = MediaQuery.of(context).platformBrightness;
+    bool isDarkMode = brightness == Brightness.dark;
+
     return GestureDetector(
         onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();
@@ -59,14 +69,16 @@ class First extends StatelessWidget {
             body: const MyCustomForm(),
             drawer: Drawer(
               child: ListView(padding: EdgeInsets.zero, children: [
-                const SizedBox(
+                SizedBox(
                   height: 100,
                   child: DrawerHeader(
                     decoration: BoxDecoration(
-                      color: Colors.blue,
+                      color: isDarkMode
+                          ? const Color.fromARGB(255, 17, 110, 185)
+                          : Colors.blue,
                     ),
-                    margin: EdgeInsets.all(0),
-                    child: Align(
+                    margin: const EdgeInsets.all(0),
+                    child: const Align(
                         alignment: Alignment.center,
                         child: Text(
                           'Navigator',
@@ -92,13 +104,7 @@ class First extends StatelessWidget {
   }
 }
 
-// Create a corresponding State class.
-// This class holds data related to the form.
 class MyCustomFormState extends State<MyCustomForm> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  // Note: This is a GlobalKey<FormState>,
-  // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
 
   var ore = 0;
@@ -109,12 +115,20 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   @override
   Widget build(BuildContext context) {
-    // Build a Form widget using the _formKey created above.
+    var brightness = MediaQuery.of(context).platformBrightness;
+    bool isDarkMode = brightness == Brightness.dark;
+
     return Form(
       key: _formKey,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Text(
+            minuti.toString().length < 2
+                ? "Ultimo aggiunto -> $ore:0$minuti"
+                : "Ultimo aggiunto -> $ore:$minuti",
+            style: const TextStyle(fontSize: 22),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
             child: TextFormField(
@@ -200,8 +214,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                     somma += (paga * ore) + (minuti * (paga / 60));
                   }
                 });
-                // Validate returns true if the form is valid, or false otherwise.
               },
+              style: ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(isDarkMode
+                    ? const Color.fromARGB(255, 17, 110, 185)
+                    : Colors.blue),
+              ),
               child: const Text('Calcola'),
             ),
           ),
@@ -213,10 +231,17 @@ class MyCustomFormState extends State<MyCustomForm> {
                   _ore.clear();
                   _minuti.clear();
                   _paga.clear();
+                  ore = 0;
+                  minuti = 0;
+                  paga = 0;
                   somma = 0;
                 });
-                // Validate returns true if the form is valid, or false otherwise.
               },
+              style: ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(isDarkMode
+                    ? const Color.fromARGB(255, 17, 110, 185)
+                    : Colors.blue),
+              ),
               child: const Text('Azzera'),
             ),
           ),
@@ -232,6 +257,10 @@ class Second extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const appTitle = 'Hours Counter';
+
+    var brightness = MediaQuery.of(context).platformBrightness;
+    bool isDarkMode = brightness == Brightness.dark;
+
     return GestureDetector(
         onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();
@@ -244,14 +273,16 @@ class Second extends StatelessWidget {
             body: const SecondScreenForm(),
             drawer: Drawer(
               child: ListView(padding: EdgeInsets.zero, children: [
-                const SizedBox(
+                SizedBox(
                   height: 100,
                   child: DrawerHeader(
                     decoration: BoxDecoration(
-                      color: Colors.blue,
+                      color: isDarkMode
+                          ? const Color.fromARGB(255, 17, 110, 185)
+                          : Colors.blue,
                     ),
-                    margin: EdgeInsets.all(0),
-                    child: Align(
+                    margin: const EdgeInsets.all(0),
+                    child: const Align(
                         alignment: Alignment.center,
                         child: Text(
                           'Navigator',
@@ -277,11 +308,6 @@ class Second extends StatelessWidget {
 }
 
 class SecondScreenFormState extends State<SecondScreenForm> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a GlobalKey<FormState>,
-  // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
   var ore = 0;
   var paga = 0;
@@ -289,91 +315,98 @@ class SecondScreenFormState extends State<SecondScreenForm> {
 
   @override
   Widget build(BuildContext context) {
-    // Build a Form widget using the _formKey created above.
+    var brightness = MediaQuery.of(context).platformBrightness;
+    bool isDarkMode = brightness == Brightness.dark;
+
     return Form(
       key: _formKey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
-            child: TextFormField(
-              decoration: InputDecoration(
-                  hintText: "Ore settimanali",
-                  border: const OutlineInputBorder(),
-                  labelText: "Ore settimanali",
-                  suffixIcon: IconButton(
-                    onPressed: _ores.clear,
-                    icon: const Icon(Icons.clear),
-                  )),
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
+          child: TextFormField(
+            decoration: InputDecoration(
+                hintText: "Ore settimanali",
+                border: const OutlineInputBorder(),
+                labelText: "Ore settimanali",
+                suffixIcon: IconButton(
+                  onPressed: _ores.clear,
+                  icon: const Icon(Icons.clear),
+                )),
+            keyboardType: TextInputType.number,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            controller: _ores,
+            validator: (value) {
+              if (value!.isEmpty) {
+                return "Inserisci un numero";
+              }
+              ore = int.parse(value) * 4;
+              return null;
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
+          child: TextFormField(
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              controller: _ores,
+              controller: _stipendio,
+              decoration: InputDecoration(
+                  hintText: "Stipendio",
+                  border: const OutlineInputBorder(),
+                  labelText: "Stipendio",
+                  suffixIcon: IconButton(
+                    onPressed: _stipendio.clear,
+                    icon: const Icon(Icons.clear),
+                  )),
               validator: (value) {
                 if (value!.isEmpty) {
                   return "Inserisci un numero";
                 }
-                ore = int.parse(value) * 4;
+                paga = int.parse(value);
                 return null;
-              },
+              }),
+        ),
+        Text(
+          "$somma€ l'ora",
+          style: const TextStyle(fontSize: 30),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+          child: ElevatedButton(
+            onPressed: () {
+              setState(() {
+                if (_formKey.currentState!.validate()) {
+                  somma = (paga / ore);
+                }
+              });
+            },
+            style: ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll(isDarkMode
+                  ? const Color.fromARGB(255, 17, 110, 185)
+                  : Colors.blue),
             ),
+            child: const Text('Calcola'),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
-            child: TextFormField(
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                controller: _stipendio,
-                decoration: InputDecoration(
-                    hintText: "Stipendio",
-                    border: const OutlineInputBorder(),
-                    labelText: "Stipendio",
-                    suffixIcon: IconButton(
-                      onPressed: _stipendio.clear,
-                      icon: const Icon(Icons.clear),
-                    )),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Inserisci un numero";
-                  }
-                  paga = int.parse(value);
-                  return null;
-                }),
-          ),
-          Text(
-            "$somma€ l'ora",
-            style: const TextStyle(fontSize: 30),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-            child: ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  if (_formKey.currentState!.validate()) {
-                    somma = (paga / ore);
-                  }
-                });
-                // Validate returns true if the form is valid, or false otherwise.
-              },
-              child: const Text('Calcola'),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+          child: ElevatedButton(
+            onPressed: () {
+              setState(() {
+                _ores.clear();
+                _stipendio.clear();
+                somma = 0;
+              });
+            },
+            style: ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll(isDarkMode
+                  ? const Color.fromARGB(255, 17, 110, 185)
+                  : Colors.blue),
             ),
+            child: const Text('Azzera'),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-            child: ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  _ores.clear();
-                  _stipendio.clear();
-                  somma = 0;
-                });
-                // Validate returns true if the form is valid, or false otherwise.
-              },
-              child: const Text('Azzera'),
-            ),
-          ),
-        ],
-      ),
+        )
+      ]),
     );
   }
 }
