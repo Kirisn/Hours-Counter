@@ -105,7 +105,7 @@ flutter_native_splash:
   color_dark: "#333436"
   #background_image_dark: "assets/dark-background.png"
   #image_dark: assets/splash-invert.png
-  branding_dark: assets/Android12Logo.png
+  branding_dark: assets/Android12Logo-dark.png
 
   # Android 12 handles the splash screen differently than previous versions.  Please visit
   # https://developer.android.com/guide/topics/ui/splash-screen
@@ -135,7 +135,7 @@ flutter_native_splash:
     # parameters from above.
     image_dark: assets/android12splash.png
     color_dark: "#333436"
-    branding_dark: assets/Android12Logo.png
+    branding_dark: assets/Android12Logo-dark.png
     #icon_background_color_dark: "#eeeeee"
 
   # The android, ios and web parameters can be used to disable generating a splash screen on a given
