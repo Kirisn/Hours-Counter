@@ -55,7 +55,7 @@ flutter_icons:
   android: true
   ios: true
   image_path: "assets/splash.png"
-  min_sdk_android: 21 # android min sdk min:16, default 21
+  min_sdk_android: 16 # android min sdk min:16, default 21
   web:
     generate: true
     image_path: "assets/splash.png"
@@ -63,7 +63,7 @@ flutter_icons:
     theme_color: "#ffffff"
   windows:
     generate: true
-    image_path: "assets/splas.png"
+    image_path: "assets/splash.png"
     icon_size: 256 # min:48, max:256, default: 48
 
 flutter_native_splash:
