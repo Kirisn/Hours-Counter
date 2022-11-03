@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  runApp(const MyApp());
+  Timer(const Duration(seconds: 2), (() {
+    runApp(const MyApp());
+  }));
 }
 
 class MyCustomForm extends StatefulWidget {
