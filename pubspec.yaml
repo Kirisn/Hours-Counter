@@ -55,7 +55,7 @@ flutter_icons:
   android: true
   ios: true
   image_path: "assets/splash.png"
-  min_sdk_android: 16 # android min sdk min:16, default 21
+  min_sdk_android: 21 # android min sdk min:16, default 21
   web:
     generate: true
     image_path: "assets/splash.png"
@@ -91,7 +91,7 @@ flutter_native_splash:
   # The branding property allows you to specify an image used as branding in the splash screen.
   # It must be a png file. It is supported for Android, iOS and the Web.  For Android 12,
   # see the Android 12 section below.
-  branding: assets/Android12Logo.png
+  branding: assets/android12brand-dark.png
 
   # To position the branding image at the bottom of the screen you can use bottom, bottomRight,
   # and bottomLeft. The default values is bottom if not specified or specified something else.
@@ -105,7 +105,7 @@ flutter_native_splash:
   color_dark: "#333436"
   #background_image_dark: "assets/dark-background.png"
   #image_dark: assets/splash-invert.png
-  branding_dark: assets/Android12Logo-dark.png
+  branding_dark: assets/android12brand.png
 
   # Android 12 handles the splash screen differently than previous versions.  Please visit
   # https://developer.android.com/guide/topics/ui/splash-screen
@@ -125,17 +125,17 @@ flutter_native_splash:
 
 
     # App icon background color.
-    icon_background_color: "#000000"
+    #icon_background_color: "#000000"
 
     # The branding property allows you to specify an image used as branding in the splash screen.
-    branding: assets/Android12Logo.png
+    branding: assets/android12brand-dark.png
 
     # The image_dark, color_dark, icon_background_color_dark, and branding_dark set values that
     # apply when the device is in dark mode. If they are not specified, the app will use the
     # parameters from above.
     image_dark: assets/android12splash.png
     color_dark: "#333436"
-    branding_dark: assets/Android12Logo-dark.png
+    branding_dark: assets/android12brand.png
     #icon_background_color_dark: "#eeeeee"
 
   # The android, ios and web parameters can be used to disable generating a splash screen on a given
@@ -217,8 +217,6 @@ flutter:
   assets:
     - assets/android12splash.png
     - assets/splash.png
-    - assets/logo.png
-    - assets/Android12Logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
